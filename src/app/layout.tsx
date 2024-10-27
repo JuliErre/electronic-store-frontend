@@ -1,4 +1,7 @@
+import Header from "@/components/header/Header";
+import { NextUIProvider } from "@nextui-org/react";
 import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
 import localFont from "next/font/local";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
@@ -26,10 +29,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-                <Toaster position="bottom-center" />
-                {children}
+            <body className="min-w-screen min-h-screen flex flex-col bg-zinc-300">
+                <SessionProvider>
+                    <Toaster position="bottom-center" />
+                    <Header />
+                    <NextUIProvider>{children}</NextUIProvider>
+                </SessionProvider>
             </body>
         </html>
     );

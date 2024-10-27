@@ -1,4 +1,4 @@
-import { registerUser } from "@/services/authService";
+import { registerUser } from "@/services/auth.service";
 import { UserDataRegister } from "@/types/authTypes";
 
 type OnSuccess = (data: any) => void;

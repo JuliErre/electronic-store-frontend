@@ -3,6 +3,7 @@ export const ROUTES = {
     login: "/auth/login",
     register: "/auth/register",
     profile: "/profile",
+    cart: "/cart",
     notFound: "/404",
 };
 

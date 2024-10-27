@@ -12,10 +12,10 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     (config) => {
         // Agregar token de autorización si es necesario
-        const token = localStorage.getItem("token"); // o de tu estado global
-        if (token) {
-            config.headers["Authorization"] = `Bearer ${token}`;
-        }
+        // const token = localStorage.getItem("token"); // o de tu estado global
+        // if (token) {
+        //     config.headers["Authorization"] = `Bearer ${token}`;
+        // }
         return config;
     },
     (error) => {
