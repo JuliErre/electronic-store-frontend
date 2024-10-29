@@ -101,14 +101,19 @@ export default function Navbar() {
                 ) : (
                     <>
                         <NavbarItem className=" lg:flex">
-                            <Link href="#">Login</Link>
+                            <Link
+                                className="text-green-500"
+                                href={ROUTES.login}>
+                                Login
+                            </Link>
                         </NavbarItem>
 
                         <NavbarItem>
                             <Button
                                 as={Link}
                                 color="primary"
-                                href="#"
+                                className="bg-green-900 bg-opacity-30 text-green-800 ml-2"
+                                href={ROUTES.register}
                                 variant="flat">
                                 Sign Up
                             </Button>

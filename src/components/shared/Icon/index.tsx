@@ -1,5 +1,5 @@
 import { FaMinus, FaPlus, FaSearch } from "react-icons/fa";
-import { FaCartShopping, FaChevronDown } from "react-icons/fa6";
+import { FaCartShopping, FaChevronDown, FaRegTrashCan } from "react-icons/fa6";
 import { IoMdPerson } from "react-icons/io";
 import { Props } from "./types";
 
@@ -11,6 +11,7 @@ const Icon = ({ icon, ...iconProps }: Props<keyof typeof icons>) => {
         Person: <IoMdPerson {...iconProps} />,
         Add: <FaPlus {...iconProps} />,
         Decrease: <FaMinus {...iconProps} />,
+        Trash: <FaRegTrashCan />,
     };
 
     return icons[icon];
