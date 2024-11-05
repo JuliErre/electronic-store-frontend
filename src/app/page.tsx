@@ -1,4 +1,5 @@
 import CardList from "@/components/products/CardList";
+import { handleGetProducts } from "@/useCases/products/products";
 import { ROUTES } from "@/utils/constants";
 import { auth, signOut } from "../../auth";
 
@@ -43,6 +44,16 @@ const mockData = [
 
 export default async function Home() {
     const session = await auth();
+    const getProducts = async () => {
+        try {
+            const products = handleGetProducts();
+            return products;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    const products = await getProducts();
+
     console.log(session);
     return (
         <div className="flex min-h-[calc(100vh-80px)] items-center justify-center flex-col  font-[family-name:var(--font-geist-sans)]  bg-zinc-300 px-4 pb-3">
@@ -58,7 +69,7 @@ export default async function Home() {
                 </button> */}
             </form>
             <div className="flex flex-wrap  items-center justify-center gap-4">
-                <CardList products={mockData} />
+                <CardList products={products} />
             </div>
         </div>
     );

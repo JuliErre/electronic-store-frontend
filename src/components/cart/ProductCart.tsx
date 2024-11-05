@@ -12,9 +12,11 @@ const ProductCart = ({
     const formattedPrice = getPriceFormat(finalPrice);
     return (
         <div className="flex gap-7 items-center text-zinc-700">
-            <Image src={product.image} alt="" />
+            <div className="w-36">
+                <Image src={product.image} alt="" />
+            </div>
 
-            <h6 className="font-semibold">{product.name}</h6>
+            <h6 className="font-semibold w-96">{product.name}</h6>
 
             <Counter
                 initialValue={product.quantity}

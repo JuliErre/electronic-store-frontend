@@ -31,12 +31,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             if (user) {
                 token.accessToken = user.accessToken;
                 token.name = user.username;
+                token.id = user.id;
             }
             return token;
         },
         async session({ session, token }) {
             session.accessToken = token.accessToken;
             session.user.name = token.name;
+            session.user.id = token.id;
             return session;
         },
     },
