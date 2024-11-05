@@ -1,4 +1,5 @@
 import CardList from "@/components/products/CardList";
+import CardSkeletonList from "@/components/products/CardSkeletonList";
 import { handleGetProducts } from "@/useCases/products/products";
 import { ROUTES } from "@/utils/constants";
 import { auth, signOut } from "../../auth";
@@ -44,12 +45,16 @@ const mockData = [
 
 export default async function Home() {
     const session = await auth();
+    let isLoading = false;
     const getProducts = async () => {
         try {
-            const products = handleGetProducts();
+            isLoading = true;
+            const products = await handleGetProducts();
             return products;
         } catch (error) {
             console.log(error);
+        } finally {
+            isLoading = false;
         }
     };
     const products = await getProducts();
@@ -68,8 +73,13 @@ export default async function Home() {
                     Sign Out
                 </button> */}
             </form>
+
             <div className="flex flex-wrap  items-center justify-center gap-4">
-                <CardList products={products} />
+                {isLoading ? (
+                    <CardSkeletonList length={6} />
+                ) : (
+                    <CardList products={products} />
+                )}
             </div>
         </div>
     );

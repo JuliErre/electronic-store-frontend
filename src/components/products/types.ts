@@ -9,3 +9,7 @@ export interface CardProps {
     cartCount: number;
     onAdd: () => void;
 }
+
+export interface CardSkeletonListProps {
+    length: number;
+}
