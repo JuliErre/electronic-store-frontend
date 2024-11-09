@@ -8,6 +8,7 @@ interface PaymentData {
         quantity: number;
         title: string;
         price: number;
+        imageUrl: string;
     }[];
     email: string;
     userId: string;
@@ -19,6 +20,7 @@ export const createPayment = async (data: PaymentData) => {
         quantity: product.quantity,
         title: product.title,
         price: product.price,
+        imageUrl: product.imageUrl,
     }));
     const response = await axiosInstance.post<EndpointPayments>(
         API_ROUTES.payments,

@@ -5,6 +5,7 @@ interface PaymentData {
         quantity: number;
         title: string;
         price: number;
+        imageUrl: string;
     }[];
     email: string;
     userId: string;

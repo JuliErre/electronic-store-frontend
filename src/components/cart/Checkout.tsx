@@ -17,6 +17,7 @@ const getPaymentLink = async (products: ProductCart[], session: Session) => {
             quantity: product.quantity,
             title: product.name,
             price: product.price,
+            imageUrl: product.image,
         }));
         const response = await handlePayment({
             products: paymentData,
