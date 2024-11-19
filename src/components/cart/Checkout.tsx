@@ -11,7 +11,6 @@ import toast from "react-hot-toast";
 
 const getPaymentLink = async (products: ProductCart[], session: Session) => {
     try {
-        console.log("session", session.user?.email);
         const paymentData = products.map((product) => ({
             id: product.id,
             quantity: product.quantity,

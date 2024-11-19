@@ -1,85 +1,79 @@
+import Categories from "@/components/categories/Categories";
 import CardList from "@/components/products/CardList";
 import CardSkeletonList from "@/components/products/CardSkeletonList";
+import Pagination from "@/components/products/Pagination";
+import SortSelect from "@/components/products/SortSelect";
+import { ProductsParams } from "@/models";
 import { handleGetProducts } from "@/useCases/products/products";
-import { ROUTES } from "@/utils/constants";
-import { auth, signOut } from "../../auth";
+import { auth } from "../../auth";
 
-const mockData = [
-    {
-        id: 1,
-        name: "Placa de Video Zotac GeForce RTX 4060 Ti 16GB GDDR6 AMP",
-        price: 632567,
-        image: "https://imagenes.compragamer.com/productos/compragamer_Imganen_general_41330_Placa_de_Video_Zotac_GeForce_RTX_4060_Ti_16GB_GDDR6_AMP_b55acf2f-med.jpg",
-    },
-    {
-        id: 2,
-        name: "Placa de Video Zotac GeForce RTX 4060 Ti 16GB GDDR6 AMP",
-        price: 632567,
-        image: "https://imagenes.compragamer.com/productos/compragamer_Imganen_general_41330_Placa_de_Video_Zotac_GeForce_RTX_4060_Ti_16GB_GDDR6_AMP_b55acf2f-med.jpg",
-    },
-    {
-        id: 3,
-        name: "Placa de Video Zotac GeForce RTX 4060 Ti 16GB GDDR6 AMP",
-        price: 632567,
-        image: "https://imagenes.compragamer.com/productos/compragamer_Imganen_general_41330_Placa_de_Video_Zotac_GeForce_RTX_4060_Ti_16GB_GDDR6_AMP_b55acf2f-med.jpg",
-    },
-    {
-        id: 4,
-        name: "Placa de Video Zotac GeForce RTX 4060 Ti 16GB GDDR6 AMP",
-        price: 632567,
-        image: "https://imagenes.compragamer.com/productos/compragamer_Imganen_general_41330_Placa_de_Video_Zotac_GeForce_RTX_4060_Ti_16GB_GDDR6_AMP_b55acf2f-med.jpg",
-    },
-    {
-        id: 5,
-        name: "Placa de Video Zotac GeForce RTX 4060 Ti 16GB GDDR6 AMP",
-        price: 632567,
-        image: "https://imagenes.compragamer.com/productos/compragamer_Imganen_general_41330_Placa_de_Video_Zotac_GeForce_RTX_4060_Ti_16GB_GDDR6_AMP_b55acf2f-med.jpg",
-    },
-    {
-        id: 6,
-        name: "Placa de Video Zotac GeForce RTX 4060 Ti 16GB GDDR6 AMP",
-        price: 632567,
-        image: "https://imagenes.compragamer.com/productos/compragamer_Imganen_general_41330_Placa_de_Video_Zotac_GeForce_RTX_4060_Ti_16GB_GDDR6_AMP_b55acf2f-med.jpg",
-    },
-];
-
-export default async function Home() {
+export default async function Home({
+    searchParams,
+}: {
+    searchParams: Record<string, string>;
+}) {
     const session = await auth();
     let isLoading = false;
+    const params: ProductsParams = {
+        page: Number(searchParams.page || "1"),
+        limit: Number(searchParams.limit || "10"),
+        sortBy: searchParams.sortBy || "name",
+        order: (searchParams.order as ProductsParams["order"]) || "ASC",
+        category: searchParams.category || null,
+    };
+
     const getProducts = async () => {
         try {
             isLoading = true;
-            const products = await handleGetProducts();
+            const products = await handleGetProducts(params);
             return products;
         } catch (error) {
-            console.log(error);
+            console.error(error);
         } finally {
             isLoading = false;
         }
     };
-    const products = await getProducts();
+    const res = await getProducts();
+    const products = res?.items ?? [];
+    const totalPages = res?.totalPages ?? 0;
 
-    console.log(session);
     return (
-        <div className="flex min-h-[calc(100vh-80px)] items-center justify-center flex-col  font-[family-name:var(--font-geist-sans)]  bg-zinc-300 px-4 pb-3">
-            <form
+        <div className="flex justify-between flex-col items-center min-h-[calc(100vh-150px)]  font-[family-name:var(--font-geist-sans)]  bg-zinc-300 px-4 py-3">
+            {/* <form
                 action={async () => {
                     "use server";
                     await signOut({
                         redirectTo: ROUTES.login,
                     });
                 }}>
-                {/* <button type="submit" className="bg-blue-400">
+                <button type="submit" className="bg-blue-400">
                     Sign Out
-                </button> */}
-            </form>
+                </button>
+            </form> */}
+            <div className="flex flex-col w-full">
+                <div className=" self-end">
+                    <SortSelect />
+                </div>
 
-            <div className="flex flex-wrap  items-center justify-center gap-4">
-                {isLoading ? (
-                    <CardSkeletonList length={6} />
-                ) : (
-                    <CardList products={products} />
-                )}
+                <div className="flex w-full py-4">
+                    <div className="flex  pr-10">
+                        <Categories />
+                    </div>
+
+                    <div className="flex flex-1 flex-wrap  items-start  gap-4">
+                        {isLoading ? (
+                            <CardSkeletonList length={6} />
+                        ) : (
+                            <CardList products={products} />
+                        )}
+                    </div>
+                </div>
+            </div>
+            <div>
+                <Pagination
+                    currentPage={params.page ?? 0}
+                    totalPages={totalPages}
+                />
             </div>
         </div>
     );

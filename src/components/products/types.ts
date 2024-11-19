@@ -1,6 +1,6 @@
 import { ProductEntity } from "@/models";
 export interface CardLIstProps {
-    products: ProductEntity[];
+    products: ProductEntity[] | [];
 }
 export interface CardProps {
     title: string;
@@ -12,4 +12,9 @@ export interface CardProps {
 
 export interface CardSkeletonListProps {
     length: number;
+}
+
+export interface PaginationProps {
+    currentPage: number;
+    totalPages: number;
 }

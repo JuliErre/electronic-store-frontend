@@ -9,7 +9,6 @@ import {
     DropdownMenu,
     DropdownTrigger,
     Input,
-    Link,
     Navbar as Nav,
     NavbarBrand,
     NavbarContent,
@@ -17,17 +16,23 @@ import {
     Spinner,
 } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import CartCountIcon from "../cart/CartCountIcon";
 import Icon from "../shared/Icon";
 
 export default function Navbar() {
-    const { data: session, status } = useSession();
+    const { data: session, status } = useSession({
+        required: false,
+    });
 
     const products = useCartStore((state) => state.products);
     const productsQuantity = products.reduce(
         (acc, product) => product.quantity + acc,
         0
     );
+
+    const { replace } = useRouter();
 
     const sessionStatusComponents: Record<
         "authenticated" | "loading" | "unauthenticated",
@@ -135,14 +140,12 @@ export default function Navbar() {
             <NavbarContent className="gap-0 " justify="end">
                 {sessionStatusComponents[status]}
 
-                <Link href={ROUTES.cart} className="flex h-full">
-                    <Button className="bg-transparent flex h-20">
-                        <CartCountIcon
-                            color="#22c55e"
-                            count={productsQuantity}
-                        />
-                    </Button>
-                </Link>
+                <Button
+                    as={Link}
+                    className="bg-transparent flex h-20"
+                    href={ROUTES.cart}>
+                    <CartCountIcon color="#22c55e" count={productsQuantity} />
+                </Button>
             </NavbarContent>
         </Nav>
     );
