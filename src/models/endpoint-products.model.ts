@@ -21,4 +21,5 @@ export interface ProductsParams {
     sortBy?: string;
     order?: "ASC" | "DESC";
     category?: string | null;
+    search?: string | null;
 }

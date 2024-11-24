@@ -8,7 +8,6 @@ import {
     DropdownItem,
     DropdownMenu,
     DropdownTrigger,
-    Input,
     Navbar as Nav,
     NavbarBrand,
     NavbarContent,
@@ -17,9 +16,9 @@ import {
 } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import CartCountIcon from "../cart/CartCountIcon";
 import Icon from "../shared/Icon";
+import SearchInput from "./SearchInput";
 
 export default function Navbar() {
     const { data: session, status } = useSession({
@@ -31,8 +30,6 @@ export default function Navbar() {
         (acc, product) => product.quantity + acc,
         0
     );
-
-    const { replace } = useRouter();
 
     const sessionStatusComponents: Record<
         "authenticated" | "loading" | "unauthenticated",
@@ -127,14 +124,7 @@ export default function Navbar() {
                 </div>
             </NavbarBrand>
             <NavbarContent className="hidden sm:flex " justify="center">
-                <Input
-                    label="Search"
-                    isClearable
-                    radius="lg"
-                    className="w-[350px] my-5"
-                    placeholder="Type to search..."
-                    startContent={<Icon icon="Search" color="black" />}
-                />
+                <SearchInput />
             </NavbarContent>
 
             <NavbarContent className="gap-0 " justify="end">

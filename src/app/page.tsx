@@ -20,6 +20,7 @@ export default async function Home({
         sortBy: searchParams.sortBy || "name",
         order: (searchParams.order as ProductsParams["order"]) || "ASC",
         category: searchParams.category || null,
+        search: searchParams.search || null,
     };
 
     const getProducts = async () => {
@@ -70,10 +71,12 @@ export default async function Home({
                 </div>
             </div>
             <div>
-                <Pagination
-                    currentPage={params.page ?? 0}
-                    totalPages={totalPages}
-                />
+                {!isLoading && totalPages > 1 && (
+                    <Pagination
+                        currentPage={params.page ?? 0}
+                        totalPages={totalPages}
+                    />
+                )}
             </div>
         </div>
     );
