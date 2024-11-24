@@ -8,8 +8,6 @@ import {
     DropdownItem,
     DropdownMenu,
     DropdownTrigger,
-    Input,
-    Link,
     Navbar as Nav,
     NavbarBrand,
     NavbarContent,
@@ -17,11 +15,15 @@ import {
     Spinner,
 } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import CartCountIcon from "../cart/CartCountIcon";
 import Icon from "../shared/Icon";
+import SearchInput from "./SearchInput";
 
 export default function Navbar() {
-    const { data: session, status } = useSession();
+    const { data: session, status } = useSession({
+        required: false,
+    });
 
     const products = useCartStore((state) => state.products);
     const productsQuantity = products.reduce(
@@ -122,27 +124,18 @@ export default function Navbar() {
                 </div>
             </NavbarBrand>
             <NavbarContent className="hidden sm:flex " justify="center">
-                <Input
-                    label="Search"
-                    isClearable
-                    radius="lg"
-                    className="w-[350px] my-5"
-                    placeholder="Type to search..."
-                    startContent={<Icon icon="Search" color="black" />}
-                />
+                <SearchInput />
             </NavbarContent>
 
             <NavbarContent className="gap-0 " justify="end">
                 {sessionStatusComponents[status]}
 
-                <Link href={ROUTES.cart} className="flex h-full">
-                    <Button className="bg-transparent flex h-20">
-                        <CartCountIcon
-                            color="#22c55e"
-                            count={productsQuantity}
-                        />
-                    </Button>
-                </Link>
+                <Button
+                    as={Link}
+                    className="bg-transparent flex h-20"
+                    href={ROUTES.cart}>
+                    <CartCountIcon color="#22c55e" count={productsQuantity} />
+                </Button>
             </NavbarContent>
         </Nav>
     );
