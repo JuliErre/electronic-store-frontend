@@ -7,7 +7,8 @@ export interface CardProps {
     price: number;
     image: string;
     cartCount: number;
-    onAdd: () => void;
+    onAdd: (e: React.MouseEvent) => void;
+    onClick: (e: React.MouseEvent) => void;
 }
 
 export interface CardSkeletonListProps {
@@ -17,4 +18,8 @@ export interface CardSkeletonListProps {
 export interface PaginationProps {
     currentPage: number;
     totalPages: number;
+}
+
+export interface CardProductDetailProps {
+    product: ProductEntity;
 }

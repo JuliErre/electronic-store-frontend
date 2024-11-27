@@ -8,7 +8,7 @@ export interface CartProps {
     clearCart: () => void;
 }
 
-export interface ProductCartProps {
+export interface CartProductsProps {
     product: ProductCart;
     onIncrement: () => void;
     onDecrement: () => void;

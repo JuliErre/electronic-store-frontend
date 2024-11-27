@@ -12,6 +12,7 @@ export interface EndpointProduct {
     price: number;
     stock: number;
     image: string;
+    description?: string;
     categories: string[];
 }
 

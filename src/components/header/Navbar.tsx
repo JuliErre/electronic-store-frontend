@@ -16,11 +16,13 @@ import {
 } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import CartCountIcon from "../cart/CartCountIcon";
 import Icon from "../shared/Icon";
 import SearchInput from "./SearchInput";
 
 export default function Navbar() {
+    const router = useRouter();
     const { data: session, status } = useSession({
         required: false,
     });
@@ -30,6 +32,10 @@ export default function Navbar() {
         (acc, product) => product.quantity + acc,
         0
     );
+
+    const handleClickHome = () => {
+        router.push(ROUTES.home);
+    };
 
     const sessionStatusComponents: Record<
         "authenticated" | "loading" | "unauthenticated",
@@ -58,7 +64,7 @@ export default function Navbar() {
                     <DropdownItem
                         className="bg-zinc-900"
                         key="autoscaling"
-                        description="ACME scales apps to meet user demand, automagically, based on load.">
+                        description="ACME scales apps to meet user demand, automatically, based on load.">
                         Autoscaling
                     </DropdownItem>
                     <DropdownItem
@@ -114,7 +120,9 @@ export default function Navbar() {
     return (
         <Nav className="py-2" isBlurred={false}>
             <NavbarBrand>
-                <div className="flex flex-col items-center leading">
+                <div
+                    className="flex flex-col items-center leading cursor-pointer"
+                    onClick={handleClickHome}>
                     <p className="font-bold text-White text-xl m-0 p-0">
                         Electronic
                     </p>

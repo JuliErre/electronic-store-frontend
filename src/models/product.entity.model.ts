@@ -12,4 +12,5 @@ export interface ProductEntity {
     stock: number;
     image: string;
     categories: string[];
+    description?: string;
 }

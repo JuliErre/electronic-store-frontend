@@ -1,13 +1,13 @@
 import { getPriceFormat } from "@/utils/format";
 import { Image } from "@nextui-org/react";
 import Counter from "./Counter";
-import { ProductCartProps } from "./types";
+import { CartProductsProps } from "./types";
 
-const ProductCart = ({
+const CartProducts = ({
     product,
     onIncrement,
     onDecrement,
-}: ProductCartProps) => {
+}: CartProductsProps) => {
     const finalPrice = product.price * product.quantity;
     const formattedPrice = getPriceFormat(finalPrice);
     return (
@@ -30,4 +30,4 @@ const ProductCart = ({
     );
 };
 
-export default ProductCart;
+export default CartProducts;
