@@ -4,6 +4,7 @@ export const ROUTES = {
     register: "/auth/register",
     profile: "/profile",
     cart: "/cart",
+    products: "/products",
     notFound: "/404",
 };
 

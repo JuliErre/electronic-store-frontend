@@ -3,7 +3,7 @@ import { useCartStore } from "@/store/cart.store";
 import { getPriceFormat } from "@/utils/format";
 import { Button } from "@nextui-org/react";
 import Icon from "../shared/Icon";
-import ProductCart from "./ProductCart";
+import CartProducts from "./CartProduct";
 
 const Cart = () => {
     const products = useCartStore((state) => state.products);
@@ -19,7 +19,7 @@ const Cart = () => {
     const totalPriceFormatted = getPriceFormat(totalPrice);
 
     return (
-        <div className="flex flex-col min-w-[800px] min-h-96">
+        <div className="flex flex-col  min-h-96">
             <div className="flex justify-between mb-5">
                 <h5 className="text-2xl text-black font-bold ">Cart</h5>
                 <Button
@@ -28,9 +28,9 @@ const Cart = () => {
                     onClick={clearCart}></Button>
             </div>
             {hasProducts ? (
-                <div className=" border-y border-gray-300  py-5">
+                <div className=" border-y border-gray-300 flex-1  py-5">
                     {products.map((product) => (
-                        <ProductCart
+                        <CartProducts
                             key={product.id}
                             product={product}
                             onIncrement={() => addProduct(product)}
