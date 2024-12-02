@@ -1,11 +1,13 @@
 "use client";
 
 import Input from "@/components/shared/Input";
-import { handleLogin } from "@/useCases/auth/login";
+import { UserEntity } from "@/models";
 import { ROUTES } from "@/utils/constants";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as yup from "yup";
@@ -50,7 +52,7 @@ const Login = () => {
         },
     });
 
-    const handleSuccess = (response) => {
+    const handleSuccess = (user: UserEntity) => {
         reset();
         toast.success("Logged in successfully");
         router.push(ROUTES.home);
@@ -62,9 +64,30 @@ const Login = () => {
         console.error(error);
     };
 
-    const onSubmit = async (data) => {
-        handleLogin(data, handleSuccess, handleError);
-    };
+    const onSubmit = useCallback(
+        async (data) => {
+            try {
+                const response = await signIn("credentials", {
+                    email: data.email,
+                    password: data.password,
+                    redirect: false,
+                });
+                if (response?.error) {
+                    throw new Error(response.error);
+                }
+                reset();
+                toast.success("Logged in successfully");
+                router.push(ROUTES.home);
+            } catch (error) {
+                console.error(error);
+                const errorMsg = "Invalid credentials";
+                inputs.forEach((input) =>
+                    setError(input.name, { message: errorMsg })
+                );
+            }
+        },
+        [setError, reset, router]
+    );
 
     return (
         <div className="flex flex-col">
