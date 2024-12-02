@@ -1,8 +1,8 @@
 import { registerUser } from "@/services/auth.service";
 import { UserDataRegister } from "@/types/authTypes";
 
-type OnSuccess = (data: any) => void;
-type OnError = (error: any) => void;
+type OnSuccess = (data: UserDataRegister) => void;
+type OnError = (error) => void;
 
 export const handleRegister = async (
     data: UserDataRegister,

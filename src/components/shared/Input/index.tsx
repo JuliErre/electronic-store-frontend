@@ -4,13 +4,13 @@ import React from "react";
 import { Props } from "./types";
 
 const Input = React.forwardRef<HTMLInputElement, Props>(
-    ({ error, className, withSelect, ...rest }, ref) => {
+    ({ error, className, ...rest }, ref) => {
         return (
             <div className="flex flex-col gap-2 w-full">
                 <div className="flex w-full">
                     <input
                         {...rest}
-                        ref={ref} // Asegúrate de pasar el ref
+                        ref={ref}
                         className={`input ${className} ${
                             error ? "input-error" : ""
                         }`}

@@ -14,11 +14,8 @@ import CategoriesSkeleton from "./CategoriesSkeleton";
 import { getAccordionItems, getBreadcrumbItems } from "./utils";
 
 const Categories = () => {
-    const {
-        data: categories,
-        error,
-        loading,
-    } = useFetch<CategoryEntity[]>(handleGetCategories);
+    const { data: categories, loading } =
+        useFetch<CategoryEntity[]>(handleGetCategories);
     const router = useRouter();
     const searchParams = useSearchParams();
 
