@@ -17,10 +17,10 @@ export interface EndpointProduct {
 }
 
 export interface ProductsParams {
-    page?: number;
-    limit?: number;
-    sortBy?: string;
-    order?: "ASC" | "DESC";
-    category?: string | null;
-    search?: string | null;
+    page: number;
+    limit: number;
+    sortBy: string;
+    order: "ASC" | "DESC";
+    category: string | null;
+    search: string | null;
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { ROUTES } from "@/utils/constants";
 import { Input } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
@@ -14,7 +15,7 @@ const SearchInput = () => {
         const params = new URLSearchParams();
         params.set("search", text);
         const query = params.toString() ? `?${params.toString()}` : "";
-        router.push(query);
+        router.push(`${ROUTES.products}${query}`);
     };
     return (
         <form onSubmit={handleSubmit}>

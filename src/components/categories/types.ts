@@ -11,3 +11,8 @@ export interface AccordionChild {
 export interface CategoriesProps {
     onItemClick: (categoryId: string) => void;
 }
+
+export interface BreadcrumbItem {
+    id: string;
+    name: string;
+}

@@ -14,7 +14,7 @@ import {
     NavbarItem,
     Spinner,
 } from "@nextui-org/react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import CartCountIcon from "../cart/CartCountIcon";
@@ -32,6 +32,12 @@ export default function Navbar() {
         (acc, product) => product.quantity + acc,
         0
     );
+
+    const handleSignOut = async () => {
+        await signOut({
+            redirectTo: ROUTES.login,
+        });
+    };
 
     const handleClickHome = () => {
         router.push(ROUTES.home);
@@ -57,35 +63,22 @@ export default function Navbar() {
                 </NavbarItem>
                 <DropdownMenu
                     aria-label="ACME features"
-                    className="w-[340px] bg-zinc-900 p-2 outline-none border-0"
+                    className=" bg-zinc-900 p-2 outline-none border-0"
                     itemClasses={{
                         base: "gap-4",
                     }}>
                     <DropdownItem
+                        onClick={() => router.push(ROUTES.profile)}
+                        startContent={<Icon icon="Person" color="#fff" />}
                         className="bg-zinc-900"
-                        key="autoscaling"
-                        description="ACME scales apps to meet user demand, automatically, based on load.">
-                        Autoscaling
+                        key="autoscaling">
+                        Profile
                     </DropdownItem>
                     <DropdownItem
                         key="usage_metrics"
-                        description="Real-time metrics to debug issues. Slow query added? We’ll show you exactly where.">
-                        Usage Metrics
-                    </DropdownItem>
-                    <DropdownItem
-                        key="production_ready"
-                        description="ACME runs on ACME, join us and others serving requests at web scale.">
-                        Production Ready
-                    </DropdownItem>
-                    <DropdownItem
-                        key="99_uptime"
-                        description="Applications stay on the grid with high availability and high uptime guarantees.">
-                        +99% Uptime
-                    </DropdownItem>
-                    <DropdownItem
-                        key="supreme_support"
-                        description="Overcome any challenge with a supporting team ready to respond.">
-                        +Supreme Support
+                        onClick={handleSignOut}
+                        startContent={<Icon icon="SignOut" color="#fff" />}>
+                        Sign out
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
@@ -118,7 +111,7 @@ export default function Navbar() {
     };
 
     return (
-        <Nav className="py-2" isBlurred={false}>
+        <Nav className="py-2 fixed top-0 w-full z-50" isBlurred={false}>
             <NavbarBrand>
                 <div
                     className="flex flex-col items-center leading cursor-pointer"

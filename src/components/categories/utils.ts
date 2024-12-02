@@ -1,5 +1,5 @@
 import { CategoryEntity } from "@/models";
-import { AccordionData } from "./types";
+import { AccordionData, BreadcrumbItem } from "./types";
 
 export const getAccordionItems = (
     categories: CategoryEntity[]
@@ -25,4 +25,37 @@ export const getAccordionItems = (
             childName: child.name, // This was missing
         })),
     }));
+};
+
+export const getBreadcrumbItems = (
+    accordionItems: AccordionData[],
+    categoryId: string | null
+): BreadcrumbItem[] => {
+    if (!categoryId) return [];
+
+    const currentCategory = accordionItems.find(
+        (item) =>
+            item.parentID === categoryId ||
+            item.children?.some((child) => child.childID === categoryId)
+    );
+
+    if (!currentCategory) return [];
+
+    const currentChild = currentCategory.children?.find(
+        (child) => child.childID === categoryId
+    );
+
+    const parentItem = {
+        id: currentCategory.parentID,
+        name: currentCategory.parentName,
+    };
+
+    if (!currentChild) return [parentItem];
+
+    const childItem = {
+        id: currentChild.childID,
+        name: currentChild.childName,
+    };
+
+    return [parentItem, childItem];
 };
