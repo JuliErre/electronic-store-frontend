@@ -63,7 +63,8 @@ const schema = yup.object().shape({
     password: yup.string().required("Password is required").min(8).max(20),
     confirmPassword: yup
         .string()
-        .oneOf([yup.ref("password"), null], "Passwords must match"),
+        .required("Password confirmation is required")
+        .oneOf([yup.ref("password")], "Passwords must match"),
     name: yup.string().required("Name is required"),
     username: yup.string().required("Username is required"),
     phone: yup.string().required("Phone Number is required"),
@@ -97,13 +98,26 @@ const Register = () => {
         router.push(ROUTES.login);
     };
 
-    const handleError = (error) => {
+    const handleError = (error: {
+        response: {
+            data: {
+                message: string;
+            };
+        };
+    }) => {
         const errorMsg = error.response.data.message;
         inputs.forEach((input) => setError(input.name, { message: errorMsg }));
         console.error(error);
     };
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (data: {
+        email: string;
+        password: string;
+        confirmPassword: string;
+        username: string;
+        phone: string;
+        name: string;
+    }) => {
         const dataWithCountry = {
             ...data,
             phone: `${currentCountry}${data.phone}`,
