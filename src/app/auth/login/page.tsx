@@ -1,7 +1,6 @@
 "use client";
 
 import Input from "@/components/shared/Input";
-import { UserEntity } from "@/models";
 import { ROUTES } from "@/utils/constants";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signIn } from "next-auth/react";
@@ -51,18 +50,6 @@ const Login = () => {
             password: "",
         },
     });
-
-    const handleSuccess = (user: UserEntity) => {
-        reset();
-        toast.success("Logged in successfully");
-        router.push(ROUTES.home);
-    };
-
-    const handleError = (error) => {
-        const errorMsg = error.response.data.message;
-        inputs.forEach((input) => setError(input.name, { message: errorMsg }));
-        console.error(error);
-    };
 
     const onSubmit = useCallback(
         async (data) => {

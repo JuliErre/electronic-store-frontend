@@ -24,8 +24,8 @@ const Sections = () => {
 
     const {
         data: categories,
-        error,
-        loading,
+        // error,
+        // loading,
     } = useFetch<CategoryEntity[]>(handleGetCategories);
 
     const getProductRoute = (id: string) => {

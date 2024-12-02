@@ -91,7 +91,7 @@ const Register = () => {
             name: "",
         },
     });
-    const handleSuccess = (response) => {
+    const handleSuccess = () => {
         reset();
         toast.success("Registered successfully");
         router.push(ROUTES.login);
