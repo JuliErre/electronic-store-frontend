@@ -13,7 +13,9 @@ const Header = () => {
             {showHeader ? (
                 <>
                     <Navbar />
-                    <Sections />
+                    <div className="pt-20">
+                        <Sections />
+                    </div>
                 </>
             ) : null}
         </header>

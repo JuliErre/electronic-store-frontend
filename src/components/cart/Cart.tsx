@@ -16,10 +16,10 @@ const Cart = () => {
         (acc, product) => acc + product.price * product.quantity,
         0
     );
-    const totalPriceFormatted = getPriceFormat(totalPrice);
+    const totalPriceFormatted = getPriceFormat(totalPrice.toFixed(2));
 
     return (
-        <div className="flex flex-col  min-h-96">
+        <div className="flex flex-col flex-1">
             <div className="flex justify-between mb-5">
                 <h5 className="text-2xl text-black font-bold ">Cart</h5>
                 <Button

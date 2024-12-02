@@ -9,7 +9,7 @@ const CartProducts = ({
     onDecrement,
 }: CartProductsProps) => {
     const finalPrice = product.price * product.quantity;
-    const formattedPrice = getPriceFormat(finalPrice);
+    const formattedPrice = getPriceFormat(finalPrice.toFixed(2));
     return (
         <div className="flex gap-7 items-center text-zinc-700">
             <div className="w-36">

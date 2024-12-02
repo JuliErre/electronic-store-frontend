@@ -1,4 +1,5 @@
 import Header from "@/components/header/Header";
+import Footer from "@/components/shared/Footer";
 import { NextUIProvider } from "@nextui-org/react";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
@@ -34,6 +35,7 @@ export default function RootLayout({
                     <Toaster position="bottom-center" />
                     <Header />
                     <NextUIProvider>{children}</NextUIProvider>
+                    <Footer />
                 </SessionProvider>
             </body>
         </html>
