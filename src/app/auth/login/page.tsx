@@ -52,7 +52,7 @@ const Login = () => {
     });
 
     const onSubmit = useCallback(
-        async (data) => {
+        async (data: { email: string; password: string }) => {
             try {
                 const response = await signIn("credentials", {
                     email: data.email,

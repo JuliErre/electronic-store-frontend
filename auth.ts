@@ -20,6 +20,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     const userEntity = createUserAdapter(user);
                     return userEntity;
                 } catch (error) {
+                    console.error(error);
                     return null;
                 }
             },
