@@ -44,10 +44,14 @@ const Checkout = () => {
         }
         router.push(ROUTES.login);
     };
+    const hasProducts = cartProducts.length > 0;
     return (
         <div>
             <Button
-                className="bg-orange-500 text-white font-bold text-base"
+                disabled={!hasProducts}
+                className={`bg-orange-500 text-white font-bold text-base ${
+                    !hasProducts && "bg-opacity-40"
+                }`}
                 onClick={handleClick}>
                 Checkout
             </Button>

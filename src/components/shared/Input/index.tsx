@@ -11,7 +11,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
                     <input
                         {...rest}
                         ref={ref}
-                        className={`input ${className} ${
+                        className={`input w-full ${className} ${
                             error ? "input-error" : ""
                         }`}
                     />
