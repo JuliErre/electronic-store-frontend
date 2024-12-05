@@ -3,10 +3,11 @@
 import Input from "@/components/shared/Input";
 import { ROUTES } from "@/utils/constants";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Spinner } from "@nextui-org/react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as yup from "yup";
@@ -37,6 +38,7 @@ const schema = yup.object().shape({
 
 const Login = () => {
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
     const {
         register,
         handleSubmit,
@@ -54,6 +56,7 @@ const Login = () => {
     const onSubmit = useCallback(
         async (data: { email: string; password: string }) => {
             try {
+                setIsLoading(true);
                 const response = await signIn("credentials", {
                     email: data.email,
                     password: data.password,
@@ -71,13 +74,15 @@ const Login = () => {
                 inputs.forEach((input) =>
                     setError(input.name, { message: errorMsg })
                 );
+            } finally {
+                setIsLoading(false);
             }
         },
         [setError, reset, router]
     );
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col bg-zinc-900 p-20 rounded-xl">
             <h4 className="text-center font-bold text-5xl text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500 mb-10">
                 Login
             </h4>
@@ -94,7 +99,7 @@ const Login = () => {
                     />
                 ))}
                 <button type="submit" className="btn">
-                    Sign In
+                    {isLoading ? <Spinner color="default" /> : "Login"}
                 </button>
             </form>
             <Link className="btn btn-outline mt-4" href={ROUTES.register}>

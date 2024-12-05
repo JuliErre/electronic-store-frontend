@@ -130,7 +130,7 @@ const Register = () => {
     };
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col bg-zinc-900 p-20 rounded-xl">
             <h4 className="text-center font-bold text-5xl text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500 mb-10">
                 Register
             </h4>
