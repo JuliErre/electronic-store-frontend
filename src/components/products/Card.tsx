@@ -31,7 +31,9 @@ const Card = ({
                     />
                 </CardHeader>
                 <CardBody className="overflow-visible py-2">
-                    <p className="font-normal text-base">{title}</p>
+                    <p className="font-normal text-base line-clamp-2">
+                        {title}
+                    </p>
                     <div className="flex justify-between">
                         <h4 className="font-bold text-2xl pt-6">
                             ${priceWithDot}
